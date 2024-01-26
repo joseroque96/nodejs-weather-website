@@ -17,7 +17,7 @@ const request = require('postman-request')
 
 const forecast = (longitud, lattitude, callback) => {
     const url = `http://api.weatherstack.com/current?access_key=f512f8a924cb7f0ce31092afeba3ceea&query=${lattitude},${longitud}&units=f`
-    request({url, json: true}, (e, response, {error, request: {unit}, location: {name: location}, current: { weather_descriptions, temperature, feelslike, precip }   }) => {
+    request({url, json: true}, (e, response, {error, request: {unit}, location: {name: location}, current: { weather_descriptions, temperature, feelslike, precip, humidity }   }) => {
         if(e){
             callback('Unable to connect to weather service!!')
         }else if(error){
@@ -27,7 +27,7 @@ const forecast = (longitud, lattitude, callback) => {
         }else{
             let unitDegree = 'Cº'
             if(unit === 'f') unitDegree = 'Fº'
-            callback(undefined,`Here on ${location} it's currently ${weather_descriptions[0]} and is ${temperature}${unitDegree} out. It fells like  ${feelslike}${unitDegree} out and is a ${precip}% chance of rain.`)
+            callback(undefined,`Here on ${location} it's currently ${weather_descriptions[0]} and is ${temperature}${unitDegree} out. It fells like  ${feelslike}${unitDegree} out. Finally humidity is ${humidity}% having a ${precip}% chance of rain.`)
         }
     })
 }
